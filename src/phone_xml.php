@@ -7,6 +7,30 @@
  * Time: 8:57 PM
  */
 
+
+/**
+ * Setup PDO Connection
+ */
+//$host = "gyiahost_acctest";
+//$db = "gyiahost_acctest";
+//$usr = "gyiahost_acctest";
+//$pwd = "gyiahost_acctest";
+
+//$host = "localhost";
+//$db = "acctest";
+//$usr = "root";
+//$pwd = "root";
+//$charset = "utf8";
+//$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+//
+//$option = [
+//    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+//    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+//    PDO::ATTR_EMULATE_PREPARES => false,
+//];
+
+//$pdo = new PDO($dsn, $usr, $pwd, $option);
+
 /**
  * Build the params
  */
@@ -24,6 +48,11 @@ $xmlURL = $searchURL . "?username=" . $username . "&password=" . $password . "&a
     . "&phone=" . $phoneCode;
 
 
+//$statement = $pdo->query("SELECT parameters, result FROM query_log  WHERE parameter=?");
+//$statement->execute([$xmlURL]);
+//$returnedResults = $statement->fetchColumn();
+
+
 $xml = simplexml_load_file($xmlURL);
 
 if (!$xml) {
@@ -32,9 +61,6 @@ if (!$xml) {
 $foundPhone = $xml->xpath("/Response/record");
 
 $count = 0;
-
-
-// Setup PDO Connection
 
 
 ?>
@@ -103,7 +129,6 @@ if ($count === 1) {
 <div class="results">
     <hr/>
     <h3>More details...</h3>
-    <p>Some data</p>
 </div>
 <?php
 
@@ -136,7 +161,8 @@ function formatPhone($number)
                     console.log('sending');
                 },
                 error: function () {
-                    console.log('Error -- nothing to get');
+                    $('.results').append("<div class='appended'> Ooops... we ran into an issue somewhere. Please try again</div>");
+
                 },
                 'success': function (data) {
                     $('.results').append("<div class='appended'>" + data + "</div>");
