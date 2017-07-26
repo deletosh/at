@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infopay DB Search</title>
+    <title>Infopay Phone Search</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
     <div class="grid-container">
-       <h1>Info Pay User Search</h1>
+       <h1>Infopay Phone Search</h1>
         <form action="src/phone_xml.php" method="POST">
             <div class="row">
                 <div class="medium-6 columns">
@@ -32,14 +32,14 @@
                     </label>
                 </div>
                 <div class="medium-6 columns">
-                    <label>Phone
+                    <label>Phone Number
                         <input type="text" name="phone" placeholder="Enter Phone Number"/>
                     </label>
                 </div>
 
                 <div class="medium-6 columns">
                     <label>
-                         <input type="submit" value="Search">
+                         <input type="submit" value="Search" class="button success big">
                     </label>
                 </div>
             </div>

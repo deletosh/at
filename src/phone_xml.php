@@ -11,6 +11,8 @@
  * Build the params
  */
 $searchURL = "http://www.infopay.com/phptest_phone_xml.php";
+$search2URL = "http://www.infopay.com/phptest.php";
+
 $username = htmlspecialchars($_POST['username']);
 $password = htmlspecialchars($_POST['password']);
 $areaCode = htmlspecialchars($_POST['areaCode']);
@@ -30,21 +32,61 @@ if (!$xml) {
 $foundPhone = $xml->xpath("/Response/record");
 
 $count = 0;
-foreach ($foundPhone as $r) {
+?>
+    <h1>Search Results....</h1>
+    <table border="1px">
+        <thead>
+        <tr>
+            <th width="200">Full Name</th>
+            <th width="150">State</th>
+            <th width="150">View More...</th>
+        </tr>
+        </thead>
 
-    if ($r->phone == $phone) {
-        echo "Found " . $r->firstname . " " . $r->lastname . "<br/>";
-        echo "State: " . $r->state . "<br>";
-        echo "<hr/>";
+        <tbody>
 
-        $count++;
-    }
-}
 
-if ($count === 0) {
-    echo "<h1> Could not find any match try again! <h1></h1>";
-}
-//print_r($xml);
+        <?php
+        foreach ($foundPhone
+
+                 as $r) { ?>
+            <tr>
+                <?php
+
+                if ($r->phone == $phone) {
+                    echo "<td>" . $r->firstname . " " . $r->lastname . "</td>";
+                    echo "<td>" . $r->state . "</td>";
+                    echo "<td><a href=" . $search2URL . "?username=" . $username
+                        . "&password=" . $password
+                        . "&firstname=" . $r->firstname
+                        . "&middle_initials="
+                        . "&lastname=" . $r->lastname
+                        . "&city="
+                        . "&state=" . $r->state
+                        . "&client_reference"
+                        . "&phone=" . $r->phone
+                        . "&housenumber="
+                        . "&streetname="
+                        . ">details</a></td>";
+
+                    $count++;
+                }
+
+                ?>
+            <tr/>
+            <?php
+        }
+
+        if ($count === 0) {
+            echo "<tr><strong> Could not find any match  for: <strong>" . $phone . "</strong> try again!</strong></tr>";
+        }
+
+        ?>
+
+        </tbody>
+    </table>
+
+<?php
 
 
 function formatPhone($number)
